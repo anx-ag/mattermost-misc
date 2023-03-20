@@ -99,7 +99,7 @@ while read line; do
     for team in $TEAMS; do
       JSONLINE=$JSONLINE'{
         "name": "'"$team"'",
-        "roles": "team_user"
+	"roles": "team_user"
       },'
     done
     # replace last comma with a closing bracket for the array
@@ -127,10 +127,10 @@ JOBID="$($MMCTL import process $MMFILE | sed -n 's/^.*Import process job success
 QUIT=0
 ERROR=
 LINENR=
-while true; do
+while true; do 
   OUTPUT=$($MMCTL import job show $JOBID --json)
   case "$(jq -r .[].status <<< $OUTPUT)" in
-    "pending")
+    "pending"|"in_progress")
       echo -n "."
       sleep 1
       ;;
